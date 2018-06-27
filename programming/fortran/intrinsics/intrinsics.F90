@@ -31,7 +31,7 @@ program intrinsics
   ! TODO:
   ! Using array intrinsics to get information from array A
 
-  write (*,*) 'a) Sum of elements across 2nd dimension of A: ', sum(A, dim=1)
+  write (*,*) 'a) Sum of elements across 2nd dimension of A: ', sum(A, dim=2)
 
   write (*,*) 'b) Coordinates of maximum element: ', maxloc(A)
 

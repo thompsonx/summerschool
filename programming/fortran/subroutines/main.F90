@@ -1,7 +1,7 @@
 program subroutines
   use laplacian_mod
   implicit none
-  ! TODO: define the arrays
+  real, dimension(:,:), allocatable :: previous, current
   integer :: nx, ny
 
   write (*,*) 'Give number of rows and columns for matrix A:'
