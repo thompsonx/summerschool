@@ -14,4 +14,6 @@
 
 # Course notes - TP
 
-
+implicit none - do not recognize data types according to the first letter of variable
+case insensitive, only strings are case sensitive
+good for working with numbers, not good for string processing and hardware access
