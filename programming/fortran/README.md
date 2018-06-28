@@ -25,3 +25,6 @@ type of output, e.g., * -> standard output
       |
 write(*,*)
         ^ formatting (similar to printf in C)
+
+Fortran standard does not define exact precision of numeric types
+ - however since fortran2003 it can be controlled by "kind" parameter
