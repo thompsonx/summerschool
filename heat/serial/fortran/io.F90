@@ -52,7 +52,16 @@ contains
 
     ! TODO: implement the file reading
     ! Read the header
+    open(10, file=filename)
+    read(10,'(a2,i3,x,i3)') dummy, nx, ny
 
+    call set_field_dimensions(field0, nx, ny)
+
+    allocate(field0 % data(0:field0%nx+1, 0:field0%ny+1))
+
+    do i=1, nx
+        read(10,*) field0 % data(i, 1:ny)
+    end do
 
 
     ! The arrays for temperature field contain also a halo region
@@ -62,13 +71,11 @@ contains
 
 
 
-
     ! Set the boundary values
     field0%data(1:nx,   0     ) = field0%data(1:nx, 1     )
     field0%data(1:nx,     ny+1) = field0%data(1:nx,   ny  )
     field0%data(0,      0:ny+1) = field0%data(1,    0:ny+1)
     field0%data(  nx+1, 0:ny+1) = field0%data(  nx, 0:ny+1)
-
     close(10)
   end subroutine read_field
 

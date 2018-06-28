@@ -15,13 +15,19 @@ contains
     implicit none
 
     type(field), intent(inout) :: curr, prev
-    real(dp) :: a, dt
+    real(dp) :: a, dt, laplace
     integer :: i, j, nx, ny
 
     nx = curr%nx
     ny = curr%ny
 
-    ! TODO: implement the heat equation update
+    do j = 1, nx 
+      do i = 1, ny
+        laplace = ( (prev % data(i-1,j) - 2*prev % data(i,j) + prev % data(i+1,j)) / prev % dx**2 ) + &
+                  ( (prev % data(i,j-1) - 2*prev % data(i,j) + prev % data(i,j+1)) / prev % dy**2 ) 
+        curr % data(i,j) = prev % data(i,j) + dt*a*laplace
+      end do
+    end do
   end subroutine evolve
 
 end module core
