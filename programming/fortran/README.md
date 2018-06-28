@@ -18,3 +18,10 @@ implicit none - do not recognize data types according to the first letter of var
 case insensitive, only strings are case sensitive
 good for working with numbers, not good for string processing and hardware access
 good for working with arrays, including slicing 
+
+I/O
+
+type of output, e.g., * -> standard output
+      |
+write(*,*)
+        ^ formatting (similar to printf in C)

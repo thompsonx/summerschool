@@ -8,30 +8,24 @@ contains
 
     real, dimension(:,:), allocatable, intent(out) :: field
     character(len=*), intent(in) :: filename
+    integer :: nx, ny, i
 
+    open(10, file=filename)
+    read(10,'(2x,i3,x,i3)') nx, ny
+
+    allocate(field(nx, ny))
+
+    do i=1, nx
+        read(10,*) field(i, :)
+    end do
+    
+    close(10)
     ! TODO: implement function that will:
     ! open the file
     ! read the first header line to get nx and ny
     ! allocate matrix called field
     ! read rest of the file into field
     ! close the file
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   end subroutine read_field
 
   ! Output routine, saves the temperature distribution as a png image
