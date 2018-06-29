@@ -19,6 +19,12 @@ int main(void)
      *   vecC = vecA + vecB
      */
 
+    #pragma omp parallel for shared(vecA,vecB,vecC) private(i)
+    for (i = 0; i < NX; i++)
+    {
+        vecC[i] = vecA[i] + vecB[i];
+    }
+
     sum = 0.0;
     /* Compute the check value */
     for (i = 0; i < NX; i++) {
