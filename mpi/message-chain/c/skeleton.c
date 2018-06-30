@@ -30,16 +30,30 @@ int main(int argc, char *argv[])
 
     /* TODO start */
     /* Send and receive messages as defined in exercise */
-    if (myid < ntasks - 1) {
-        MPI_Send(message, size, MPI_INT, myid+1, myid+1, MPI_COMM_WORLD);
+
+    int receivedAmount;
+
+    if (myid < ntasks - 1 && myid > 0)
+    {
+        MPI_Sendrecv(message, size, MPI_INT, myid+1, myid+1, receiveBuffer, size, MPI_INT, myid-1, myid, MPI_COMM_WORLD, &status);
+        printf("Sender: %d. Sent elements: %d. Tag: %d. Receiver: %d\n",
+               myid, size, myid + 1, myid + 1);
+        MPI_Get_count(&status, MPI_INT, &receivedAmount);
+        printf("Receiver: %d. first element %d. Data amount: %d.\n",
+               myid, receiveBuffer[0], receivedAmount);
+    }
+    else if (myid < ntasks - 1)
+    {
+        MPI_Sendrecv(message, size, MPI_INT, myid+1, myid+1, receiveBuffer, size, MPI_INT, MPI_PROC_NULL, myid, MPI_COMM_WORLD, &status);
         printf("Sender: %d. Sent elements: %d. Tag: %d. Receiver: %d\n",
                myid, size, myid + 1, myid + 1);
     }
-
-    if (myid > 0) {
-        MPI_Recv(receiveBuffer, size, MPI_INT, myid-1, myid, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
-        printf("Receiver: %d. first element %d.\n",
-               myid, receiveBuffer[0]);
+    else if (myid > 0)
+    {
+        MPI_Sendrecv(message, size, MPI_INT, MPI_PROC_NULL, myid+1, receiveBuffer, size, MPI_INT, myid-1, myid, MPI_COMM_WORLD, &status);
+        MPI_Get_count(&status, MPI_INT, &receivedAmount);
+        printf("Receiver: %d. first element %d. Data amount: %d.\n",
+               myid, receiveBuffer[0], receivedAmount);
     }
 
     /* TODO end */
