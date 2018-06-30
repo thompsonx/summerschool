@@ -1,5 +1,5 @@
 ifeq ($(COMP),)
-COMP=cray
+COMP=gnu
 endif
 
 COMMONDIR=$(shell \
@@ -12,19 +12,19 @@ COMMONDIR=$(shell \
 
 ifeq ($(COMP),cray)
 CC=cc
-CCFLAGS=-O3 -I/appl/opt/libpng/include -I$(COMMONDIR)
+CCFLAGS=-O3 -I/appl/opt/libpng/include -I$(COMMONDIR) -fopenmp
 LDFLAGS=-L/appl/opt/libpng/lib
 LIBS=-lpng -lz
 endif
 
 ifeq ($(COMP),gnu)
 CC=gcc
-CCFLAGS=-O3 -Wall -I$(COMMONDIR)
+CCFLAGS=-O3 -Wall -I$(COMMONDIR) -fopenmp
 LDFLAGS=
 LIBS=-lpng
 endif
 
-EXE=heat_serial
+EXE=heat_openmp_loops
 OBJS=core.o setup.o utilities.o io.o main.o
 OBJS_PNG=$(COMMONDIR)/pngwriter.o
 
