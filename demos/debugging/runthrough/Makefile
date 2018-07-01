@@ -1,5 +1,5 @@
 ifeq ($(COMP),)
-COMP=cray
+COMP=gnu
 endif
 
 COMMONDIR=../../../heat/common
@@ -13,7 +13,7 @@ endif
 
 ifeq ($(COMP),gnu)
 CC=gcc
-CCFLAGS=-O3 -Wall -I$(COMMONDIR)
+CCFLAGS=-Og -g -Wall -I$(COMMONDIR)
 LDFLAGS=
 LIBS=-lpng
 endif
