@@ -48,12 +48,17 @@ int main(int argc, char *argv[])
     /* TODO: Implement the communication using non-blocking
              sends and receives */
 
+    MPI_Isend(message, size, MPI_INT, destination, myid+1, MPI_COMM_WORLD, &requests[1]);
+    MPI_Irecv(receiveBuffer, size, MPI_INT, source, myid, MPI_COMM_WORLD, &requests[0]);
+
     printf("Sender: %d. Sent elements: %d. Tag: %d. Receiver: %d\n", myid,
            size, myid + 1, destination);
 
     /* Blocking wait for messages */
     /* TODO: Add here the synchronization call so that you can
              be sure that all messages have been received */
+
+    MPI_Waitall(2, requests, statuses);
 
     MPI_Get_count(&statuses[0], MPI_INT, &count);
     printf("Receiver: %d. received elements: %d. Tag %d. Sender: %d.\n",
