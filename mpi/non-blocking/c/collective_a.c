@@ -37,7 +37,7 @@ int main(int argc, char *argv[])
 
     print_buffers(printbuf, recvbuf, 2 * NTASKS);
 
-    MPI_Iscatter(sendbuf, 2*NTASKS, MPI_INT, recvbuf, 2*NTASKS, MPI_INT, 0, MPI_COMM_WORLD, &request);
+    MPI_Ibcast(sendbuf, 2*NTASKS, MPI_INT, 0, MPI_COMM_WORLD, &request);
 
     /* TODO: remember to complete the collective operation */
 
