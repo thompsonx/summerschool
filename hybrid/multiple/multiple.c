@@ -25,8 +25,8 @@ int main(int argc, char* argv[])
         tid = omp_get_thread_num();
         if (rank == 0)
         {
-            MPI_Send(&tid, 1, MPI_INT, 0, tid, MPI_COMM_WORLD);
             MPI_Send(&tid, 1, MPI_INT, 1, tid, MPI_COMM_WORLD);
+            MPI_Send(&tid, 1, MPI_INT, 2, tid, MPI_COMM_WORLD);
         }
         else
         {
@@ -39,3 +39,4 @@ int main(int argc, char* argv[])
 
     return 0;
 }
+
