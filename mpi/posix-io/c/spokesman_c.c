@@ -49,24 +49,19 @@ int main(int argc, char *argv[])
 void single_writer(int my_id, int *localvector, int localsize)
 {
     FILE *fp;
-    int *fullvector;
+
+    char fname[] = "output_0000.dat";
+
+    sprintf(fname, "output_%04d.dat", my_id);
 
     /* TODO: Implement a function that will write the data to file so that
        a single process does the file io. Use rank WRITER_ID as the io rank */
 
-    fullvector = (int*) malloc(DATASIZE * sizeof(int));
+    
+    fp = fopen(fname, "wb");
 
-    MPI_Gather(localvector, localsize, MPI_INT, fullvector, localsize, MPI_INT, 0, MPI_COMM_WORLD);
+    fwrite(localvector, sizeof(int), localsize, fp);
 
-    if (my_id == 0)
-    {
-        fp = fopen("output.dat", "wb");
-
-        fwrite(fullvector, sizeof(int), DATASIZE, fp);
-
-        fclose(fp);
-    }
-
-    free(fullvector);
+    fclose(fp);
 }
 

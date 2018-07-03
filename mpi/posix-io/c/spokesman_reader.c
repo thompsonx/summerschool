@@ -48,10 +48,23 @@ void single_reader(int my_id, int *localvector, int localsize)
 {
     FILE *fp;
     int *fullvector, nread;
-    char *fname = "singlewriter.dat";
+    char *fname = "output.dat";
 
     /* TODO: Implement a function that will read the data from a file so that
        a single process does the file io. Use rank WRITER_ID as the io rank */
+
+    fullvector = (int*) malloc(DATASIZE * sizeof(int));
+
+    if (my_id == 0)
+    {
+        fp = fopen(fname, "rb");
+
+        nread = fread(fullvector, sizeof(int), DATASIZE, fp);
+
+        fclose(fp);
+    }
+
+    MPI_Scatter(fullvector, localsize, MPI_INT, localvector, localsize, MPI_INT, 0, MPI_COMM_WORLD);
 
     free(fullvector);
 }
